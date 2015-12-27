@@ -1,0 +1,37 @@
+{% extends "OCCoreBundle::layout.html.twig" %}
+
+{% block body %}
+
+    <h1>Page d'accueil de notre site</h1>
+    <hr/>
+
+    <p id="infos">
+        {# On affiche tous les messages flash dont le nom est « info » #}
+        {% for message in app.session.flashbag.get('info') %}
+            <p class="alert alert-info" role="alert">Message flash : {{ message }}</p>
+        {% endfor %}
+    </p>
+
+    <h2>Dernières annonces</h2>
+
+    <ul>
+        {% for advert in listAdverts|reverse  %}
+            {% if loop.index <= 3 %}
+                <li>
+
+                    <a href="{{ path('oc_platform_view', {'id': advert.id}) }}">
+                        {{ advert.title }}
+                    </a>
+                    par {{ advert.author }},
+                    le {{ advert.date|date('d/m/Y') }}
+
+                </li>
+            {% endif %}
+
+        {% else %}
+            <li>Pas (encore !) d'annonces</li>
+        {% endfor %}
+    </ul>
+
+
+{% endblock %}

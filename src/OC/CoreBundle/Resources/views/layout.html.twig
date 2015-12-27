@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>{% block title %}OC Plateforme{% endblock %}</title>
+
+    {% block stylesheets %}
+        {# On charge le CSS de bootstrap depuis le site directement #}
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+        <style>
+           #infos p {
+               padding: 15px;
+           }
+            img{
+                width:100%;
+            }
+            .view h2{
+                margin-top:5px;
+            }
+        </style>
+    {% endblock %}
+</head>
+
+<body>
+<div class="container">
+    <div id="header" class="jumbotron">
+        <h1><a href="{{ path('oc_core_homepage') }}">Ma plateforme d'annonces</a></h1>
+        <p>
+            Ce projet est propulsé par Symfony2,
+            et construit grâce au MOOC OpenClassrooms et SensioLabs.
+        </p>
+        <p>
+            <a class="btn btn-primary btn-lg" href="http://fr.openclassrooms.com/informatique/cours/developpez-votre-site-web-avec-le-framework-symfony2">
+                Participer au MOOC »
+            </a>
+        </p>
+    </div>
+
+    <div class="row">
+        <nav id="menu" class="col-sm-3">
+            <h3>Accueil</h3>
+            <ul class="nav nav-pills nav-stacked">
+                {% if app.request.attributes.get('_route') == 'oc_core_homepage' %}
+                    <li class="active"> <a href="{{ path('oc_core_homepage') }}">Accueil <span class="glyphicon glyphicon-menu-right"></span></a></li>
+                {% else %}
+                    <li> <a href="{{ path('oc_core_homepage') }}">Accueil</a></li>
+                {% endif %}
+            </ul>
+            <h3>Les annonces</h3>
+            <ul class="nav nav-pills nav-stacked">
+
+                {% if app.request.attributes.get('_route') == 'oc_platform_home' %}
+                   <li class="active"> <a href="{{ path('oc_platform_home') }}">Accueil <span class="glyphicon glyphicon-menu-right"></span></a></li>
+                {% else %}
+                    <li> <a href="{{ path('oc_platform_home') }}">Accueil</a></li>
+                {% endif %}
+
+                {% if app.request.attributes.get('_route') == 'oc_platform_add' %}
+                    <li class="active"><a href="{{ path('oc_platform_add') }}">Ajouter une annonce <span class="glyphicon glyphicon-menu-right"></span></a></li>
+                {% else %}
+                     <li><a href="{{ path('oc_platform_add') }}">Ajouter une annonce</a></li>
+                {% endif %}
+            </ul>
+
+            <h4>Dernières annonces</h4>
+            {{ render(controller("OCPlatformBundle:Advert:menu", {'limit': 3})) }}
+        </nav>
+        <div id="content" class="col-sm-9">
+
+
+            {% block body %}
+            {% endblock %}
+        </div>
+    </div>
+
+    <hr>
+
+    <footer>
+        <p>The sky's the limit © {{ 'now'|date('Y') }} and beyond. <a href="{{ path('oc_core_contact') }}">Contact</a></p>
+    </footer>
+</div>
+
+{% block javascripts %}
+    {# Ajoutez ces lignes JavaScript si vous comptez vous servir des fonctionnalités du bootstrap Twitter #}
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+{% endblock %}
+
+</body>
+</html>
