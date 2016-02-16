@@ -6,11 +6,11 @@ imports:
 # Put parameters here that don't need to change on each machine where the app is deployed
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
-    locale: en
+    locale: fr
 
 framework:
     #esi:             ~
-    #translator:      { fallbacks: ["%locale%"] }
+    translator:      { fallbacks: ["%locale%"] }
     secret:          "%secret%"
     router:
         resource: "%kernel.root_dir%/config/routing.yml"
@@ -81,6 +81,21 @@ swiftmailer:
 
 # Stof\DoctrineExtensionsBundle configuration
 stof_doctrine_extensions:
-    orm:
-        default:
-            sluggable: true
+  uploadable:
+    # Default file path: This is one of the three ways you can configure the path for the Uploadable extension
+    default_file_path: %kernel.root_dir%/../web/uploads
+
+    # Mime type guesser class: Optional. By default, we provide an adapter for the one present in the HttpFoundation component of Symfony
+    mime_type_guesser_class: Stof\DoctrineExtensionsBundle\Uploadable\MimeTypeGuesserAdapter
+
+    # Default file info class implementing FileInfoInterface: Optional. By default we provide a class which is prepared to receive an UploadedFile instance.
+    default_file_info_class: Stof\DoctrineExtensionsBundle\Uploadable\UploadedFileInfo
+  orm:
+      default:
+          sluggable: true
+          uploadable: true
+
+fos_user:
+    db_driver:     orm                       # Le type de BDD à utiliser, nous utilisons l'ORM Doctrine depuis le début
+    firewall_name: main                      # Le nom du firewall derrière lequel on utilisera ces utilisateurs
+    user_class:    OC\UserBundle\Entity\User # La classe de l'entité User que nous utilisons

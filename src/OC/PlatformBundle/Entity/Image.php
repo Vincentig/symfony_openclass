@@ -3,12 +3,14 @@
 namespace OC\PlatformBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Image
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="OC\PlatformBundle\Entity\ImageRepository")
+ * @Gedmo\Uploadable(path="uploads", filenameGenerator="SHA1")
  */
 class Image
 {
@@ -25,8 +27,13 @@ class Image
      * @var string
      *
      * @ORM\Column(name="url", type="string", length=255)
+     * @Gedmo\UploadableFilePath
      */
     private $url;
+
+
+
+
 
     /**
      * @var string
@@ -93,5 +100,28 @@ class Image
     {
         return $this->alt;
     }
-}
 
+    /**
+     * Set nom
+     *
+     * @param string $nom
+     *
+     * @return Image
+     */
+    public function setNom($nom)
+    {
+        $this->nom = $nom;
+
+        return $this;
+    }
+
+    /**
+     * Get nom
+     *
+     * @return string
+     */
+    public function getNom()
+    {
+        return $this->nom;
+    }
+}

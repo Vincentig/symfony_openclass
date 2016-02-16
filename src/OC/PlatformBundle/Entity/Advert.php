@@ -6,6 +6,11 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Gedmo\Mapping\Annotation as Gedmo;
 
+
+use Symfony\Component\Validator\Constraints as Assert;
+
+use OC\PlatformBundle\Validator\Antiflood;
+
 /**
  * Advert
  *
@@ -28,6 +33,7 @@ class Advert
      * @var \DateTime
      *
      * @ORM\Column(name="date", type="datetime")
+     * @Assert\DateTime()
      */
     private $date;
 
@@ -35,6 +41,7 @@ class Advert
      * @var string
      *
      * @ORM\Column(name="title", type="string", length=255)
+     * @Assert\Length(min=10)
      */
     private $title;
 
@@ -42,13 +49,21 @@ class Advert
      * @var string
      *
      * @ORM\Column(name="author", type="string", length=255)
+     * @Assert\Length(min=2)
      */
     private $author;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="OC\UserBundle\Entity\User")
+     */
+    protected $user;
 
     /**
      * @var string
      *
      * @ORM\Column(name="content", type="text")
+     * @Assert\NotBlank()
+     * @Antiflood()
      */
     private $content;
 
@@ -59,6 +74,7 @@ class Advert
 
     /**
      * @ORM\OneToOne(targetEntity="OC\PlatformBundle\Entity\Image", cascade={"persist"})
+     * @Assert\Valid()
      */
     private $image;
 
@@ -68,7 +84,7 @@ class Advert
     private $categories;
 
     /**
-     * @ORM\OneToMany(targetEntity="OC\PlatformBundle\Entity\Application", mappedBy="advert")
+     * @ORM\OneToMany(targetEntity="OC\PlatformBundle\Entity\Application", mappedBy="advert", orphanRemoval=true)
      */
     private $applications; // Notez le � s �, une annonce est li�e � plusieurs candidatures
 
@@ -302,6 +318,20 @@ class Advert
     }
 
     /**
+     * @param Application $application
+     */
+    public function removeAllApplication()
+    {
+        foreach ($this->applications as $index => $application) {
+            $this->applications->removeElement($application);
+        }
+
+
+        // Et si notre relation était facultative (nullable=true, ce qui n'est pas notre cas ici attention) :
+        // $application->setAdvert(null);
+    }
+
+    /**
      * Get applications
      *
      * @return \Doctrine\Common\Collections\Collection
@@ -366,4 +396,18 @@ class Advert
     {
         return $this->slug;
     }
+
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param mixed $user
+     */
+    public function setUser($user)
+    {
+        $this->user = $user;
+    }
+
 }

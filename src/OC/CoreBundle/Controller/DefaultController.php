@@ -11,35 +11,11 @@ class DefaultController extends Controller
     public function indexAction()
     {
 
-        $listAdverts = array(
-            array(
-                'title'   => 'Recherche développpeur Symfony2',
-                'id'      => 1,
-                'author'  => 'Alexandre',
-                'content' => 'Nous recherchons un développeur Symfony2 débutant sur Lyon. Blabla…',
-                'date'    => new \Datetime('20.10.2015')),
-            array(
-                'title'   => 'Mission de webmaster',
-                'id'      => 2,
-                'author'  => 'Hugo',
-                'content' => 'Nous recherchons un webmaster capable de maintenir notre site internet. Blabla…',
-                'date'    => new \Datetime('25.10.2015')),
-            array(
-                'title'   => 'Offre de stage webdesigner',
-                'id'      => 3,
-                'author'  => 'Mathieu',
-                'content' => 'Nous proposons un poste pour webdesigner. Blabla…',
-                'date'    => new \Datetime('29.10.2015')),
-            array(
-                'title'   => 'Offre d\'emploi',
-                'id'      => 4,
-                'author'  => 'Vincent',
-                'content' => 'Nous proposons un poste super bien payé. Blabla…',
-                'date'    => new \Datetime())
-        );
-        return $this->render('OCCoreBundle::index.html.twig', Array(
-            'listAdverts' => $listAdverts
-        ));
+        // On retourne simplement la vue de la page d'accueil
+        // L'affichage des 3 dernières annonces utilisera le contrôleur déjà existant dans PlatformBundle
+        return $this->get('templating')->renderResponse('OCCoreBundle::index.html.twig');
+
+        // La méthode raccourcie $this->render('...') est parfaitement valable
     }
 
     public function ContactAction(Request $request)

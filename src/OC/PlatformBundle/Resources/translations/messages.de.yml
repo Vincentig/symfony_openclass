@@ -1,0 +1,6 @@
+oc:                       # Le namespace racine que vous utilisez
+    platform:             # Le nom du bundle, sans la partie Bundle
+        advert :          # Le nom de l'entité ou de la section
+            translation:
+              Hello: Bonjour
+              bye: Au revoir

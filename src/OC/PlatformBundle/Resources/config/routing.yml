@@ -14,15 +14,26 @@ oc_platform_add:
     path:      /add
     defaults:  { _controller: OCPlatformBundle:Advert:add }
 
+oc_platform_add_category:
+    path:      /add/category/
+    defaults:  { _controller: OCPlatformBundle:Category:add }
+
 oc_platform_edit:
     path:      /edit/{id}
     defaults:  { _controller: OCPlatformBundle:Advert:edit }
     requirements:
         id: \d+
 
+
 oc_platform_delete:
     path:      /delete/{id}
     defaults:  { _controller: OCPlatformBundle:Advert:delete }
+    requirements:
+        id: \d+
+
+oc_platform_purge:
+    path:      /purge/{days}
+    defaults:  { _controller: OCPlatformBundle:Advert:purge, days: 3 }
     requirements:
         id: \d+
 

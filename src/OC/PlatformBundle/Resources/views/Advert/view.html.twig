@@ -23,7 +23,7 @@
         <div class="col-md-3">
             {# On vérifie qu'une image soit bien associée à l'annonce #}
             {% if advert.image is not null %}
-                <img src="{{ advert.image.url }}" alt="{{ advert.image.alt }}">
+                <img src="{{ asset(advert.image.url) }}" alt="{{ advert.image.alt }}">
             {% endif %}
         </div>
         <div class="col-md-9">
@@ -60,6 +60,7 @@
             <i class="glyphicon glyphicon-edit"></i>
             Modifier l'annonce
         </a>
+
         <a href="{{ path('oc_platform_delete', {'id': advert.id}) }}" class="btn btn-danger">
             <i class="glyphicon glyphicon-trash"></i>
             Supprimer l'annonce

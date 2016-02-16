@@ -1,0 +1,16 @@
+<html>
+    <body>
+        {{ 'oc.platform.advert.translation.Hello'|trans({'%name%': name}) }}  <br/>
+        {{ 'oc.platform.advert.translation.bye'|trans }}    <br/>
+
+        {% for i in 0..2 %}
+            <p>{{ ('oc.platform.advert.translation.donnee.' ~ i )|trans }}</p>
+        {% endfor %}
+
+        {{ 'oc.platform.advert.translation.nombre'|transchoice(0) }}<br/>
+        {{ 'oc.platform.advert.translation.nombre'|transchoice(4) }} <br/>
+
+        Aujourd'hui nous sommes le {{ 'now'|localizeddate('full', 'none') }} et il est {{ 'now'|localizeddate('none', 'short') }}
+
+    </body>
+</html>

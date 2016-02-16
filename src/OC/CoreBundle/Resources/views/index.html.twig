@@ -13,25 +13,7 @@
     </p>
 
     <h2>Dernières annonces</h2>
-
-    <ul>
-        {% for advert in listAdverts|reverse  %}
-            {% if loop.index <= 3 %}
-                <li>
-
-                    <a href="{{ path('oc_platform_view', {'id': advert.id}) }}">
-                        {{ advert.title }}
-                    </a>
-                    par {{ advert.author }},
-                    le {{ advert.date|date('d/m/Y') }}
-
-                </li>
-            {% endif %}
-
-        {% else %}
-            <li>Pas (encore !) d'annonces</li>
-        {% endfor %}
-    </ul>
+    {{ render(controller("OCPlatformBundle:Advert:menu", {'limit': 3})) }}
 
 
 {% endblock %}
