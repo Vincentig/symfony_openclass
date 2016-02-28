@@ -26,10 +26,14 @@ class OCAntispamTest extends \PHPUnit_Framework_TestCase
 
         //run
         $expect = true;
-        $result = $antiSpam->isSpam("toto");
+        $result = $antiSpam->isSpam("to");
+
+        $expect2 = false;
+        $result2 = $antiSpam->isSpam("toto");
 
         //assert
         $this->assertEquals($expect, $result);
+        $this->assertEquals($expect2, $result2);
 
 
     }
